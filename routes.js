@@ -1,28 +1,29 @@
-// import { ConfigView  } from './views/config.js';
-// import { homeView } from './views/home.js';
-// import { resultView } from './views/result.js';
+import { ConfigView  } from './views/config.js';
+import { homeView } from './views/home.js';
+import { resultView } from './views/result.js';
+import { historiqueView } from './views/historique.js';
 
 
 const routes = {
     '/': {
         LinkLabel: 'home',
-        viewId: 'view-home',
-        // component: homeView
+        // viewId: 'view-home',
+        component: homeView
     },
     '/view-config': {
         LinkLabel: 'configuration',
-        viewId: "view-config",
-        // component: ConfigView 
+        // viewId: "view-config",
+        component: ConfigView 
     },
     '/historique': {
         LinkLabel: 'voire l'+"'"+'historique ',
-        viewId: "view-historique"
-        // component: ConfigView
+        // viewId: "view-historique"
+        component: historiqueView
     },
     '/result': {
         LinkLabel: 'results',
-        viewId: "view-result"
-        // component: resultView
+        // viewId: "view-result",
+        component: resultView
     }
 }
 

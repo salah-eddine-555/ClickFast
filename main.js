@@ -52,7 +52,7 @@ const navigate = (route) => {
 
 
 const getCurrentRoute = () => {
-    // console.log(window.location.hash.slice());
+    
     return window.location.hash.slice(1) || ''; 
 }
 
@@ -61,28 +61,29 @@ const renderView = (route) => {
     const currentRoute = routes[route];
     // // console.log(route);
     // return ;
-
+    console.log(currentRoute);
     if (!currentRoute) {
         return;
     }
-    console.log(currentRoute);
+    app.innerHTML = currentRoute.component();
+    // console.log(currentRoute);
     // return;
 
-    document.querySelectorAll('.view').forEach((v) => {
-        v.classList.remove('active');
+    // document.querySelectorAll('.view').forEach((v) => {
+    //     v.classList.remove('active');
 
-    });
+    // });
 
 
-    const currentView = document.getElementById(
-        currentRoute.viewId
-    );
-    // console.log(currentView);
-    // return;
+    // const currentView = document.getElementById(
+    //     currentRoute.viewId
+    // );
+    // // console.log(currentView);
+    // // return;
 
-    if (currentView) {
-        currentView.classList.add('active');
-    }
+    // if (currentView) {
+    //     currentView.classList.add('active');
+    // }
 };
 
 
