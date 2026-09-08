@@ -6,12 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .view {
+        display: none;
+    }
+
+    .view.active {
+        display: block;
+    }
+</style>
 <body>
     <div id="nav">
     </div>
 
     <main id="app">
-        <!-- components  -->
+        <section id="view-home" class="view">
+            <h1>Home</h1>
+        </section>
+
+        <section id="view-config" class="view">
+            <h1>Config</h1>
+        </section>
+
+        <section id="view-game" class="view">
+            <h1>Jeu </h1>
+        </section>
+
+        <section id="view-result" class="view">
+            <h1>Result</h1>
+        </section>
+
+        <section id="view-historique" class="view">
+            <h1>Historique</h1>
+        </section>
     </main>
 
     <script type="module" src="main.js"></script>

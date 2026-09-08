@@ -27,38 +27,76 @@ const renderNavLink = () => {
 renderNavLink();
 
 const registerNavButton = () => {
-    nav.addEventListener('click', (e) => {
-        e.preventDefault();
-        const path = e.target.dataset.path;
-        // console.log(path);
 
-        if(!path){
-            return;
-        }
-        
-   
-        navigate(path);
-    })
+
+   nav.addEventListener('click', (e) => {
+
+    const path = e.target.dataset.path;
+
+    if (!path) {
+        return;
+    }
+
+    navigate(path);
+
+    });
 }
 
 registerNavButton();
 
-const renderView = (route) => {
-    
-    const currentRoute = routes[route];
-
-    if(!currentRoute){
-        return;
-    }
-
-    app.innerHTML = currentRoute.component()
-}
-
-
-
 const navigate = (route) => {
     
-    history.pushState({}, "", route);
-    renderView(route);
+    window.location.hash = route
+    // renderView(route);
 }
-renderView('/');
+
+
+const getCurrentRoute = () => {
+    // console.log(window.location.hash.slice());
+    return window.location.hash.slice(1) || ''; 
+}
+
+const renderView = (route) => {
+
+    const currentRoute = routes[route];
+    // // console.log(route);
+    // return ;
+
+    if (!currentRoute) {
+        return;
+    }
+    console.log(currentRoute);
+    // return;
+
+    document.querySelectorAll('.view').forEach((v) => {
+        v.classList.remove('active');
+
+    });
+
+
+    const currentView = document.getElementById(
+        currentRoute.viewId
+    );
+    // console.log(currentView);
+    // return;
+
+    if (currentView) {
+        currentView.classList.add('active');
+    }
+};
+
+
+
+
+window.addEventListener('hashchange', () => {
+
+    renderView(getCurrentRoute());
+
+});
+
+
+
+
+// renderNavLink();
+
+renderView(getCurrentRoute());
