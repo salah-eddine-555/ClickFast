@@ -1,9 +1,13 @@
 
 
-export const homeView = () =>{
+export const homeView  = () => {
 
     return `
-        <h1>home view </h2>
-    
+        <section class="view home-view">
+                <h1>Click Fast!</h1>
+                <p>Teste tes réflexes et ta précision.</p>
+
+                <button data-path="/view-config">Commencer</button>
+        </section>
     `
-} 
+}

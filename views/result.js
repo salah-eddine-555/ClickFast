@@ -2,6 +2,14 @@
 export const resultView = () => {
 
     return `
-        <h1>result view </h1>
+         <section class="view result-view">
+            <h1>Résultats</h1>
+
+            <p>Joueur : Salah</p>
+            <p>Score : 25</p>
+            <p>Précision : 90%</p>
+
+            <button>Rejouer</button>
+        </section>
     `
 }
