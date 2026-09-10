@@ -181,6 +181,8 @@ const createGame = () => {
 
         moveTarget(target, arena);
     })
+    calculeScore(target, gameState)
+    calculeDefi(arena, target, gameState);
    
     return gameState;
 }
@@ -199,11 +201,36 @@ function moveTarget(target, arena){
 }
 
 
-function calculeScore (target){
+function calculeScore (target, gameState){
 
-        
+        target.addEventListener('click', (e) => {
+            console.log(e.target);
+            if(gameState.isPlaying !== true){
+                return;
+            }
+            gameState.score = gameState.score+ 1;
+            updateScore(gameState);
+            console.log(gameState);
+        })
 
 
+
+}
+
+function calculeDefi(arena, target, gameState){
+    console.log(gameState);
+    arena.addEventListener('click', (e) => {
+
+        if(!gameState.isPlaying){
+            return;
+        }
+
+        if(e.target !== target){
+            gameState.hits++;
+
+            updateDefis(gameState);
+        }
+    })
 }
 
 
@@ -231,6 +258,15 @@ const updateTime = (time) => {
 
     timer.textContent = time;
 }
+
+const updateScore = (gameState) => {
+    const score = document.getElementById("score-game");
+    score.textContent = gameState.score;
+}
+const updateDefis = (gameState) => {
+    const hits = document.getElementById("hits-game");
+    hits.textContent = gameState.hits;
+}   
 
 const createGameState = (setting) => {
     // console.log(setting);
@@ -294,7 +330,12 @@ const createHeadrGame = (gameState) => {
 
             <div>
                 <span>Score</span>
-                <strong>${gameState.score}</strong>
+                <strong id="score-game">${gameState.score}</strong>
+            </div>
+            
+            <div>
+                <span>hits</span>
+                <strong id="hits-game" >${gameState.hits}</strong>
             </div>
 
             <div>
