@@ -1,6 +1,6 @@
 import { ConfigView  } from './views/config.js';
 import { homeView } from './views/home.js';
-import { resultView } from './views/result.js';
+
 import { historiqueView } from './views/historique.js';
 import { GameView } from './views/game.js';
 
@@ -20,11 +20,6 @@ const routes = {
         LinkLabel: 'voire l'+"'"+'historique ',
         // viewId: "view-historique"
         component: historiqueView
-    },
-    '/result': {
-        LinkLabel: 'results',
-        // viewId: "view-result",
-        component: resultView
     },
     '/game': {
         component: GameView

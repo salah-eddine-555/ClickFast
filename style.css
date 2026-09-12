@@ -1,4 +1,77 @@
+/* css pour la nav bar   */
+#nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+}
 
+.nav-link {
+    padding: 6px 20px;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+}
+
+/* css pour le home page  */
+.home-view {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background-color: #f6f7fb;
+}
+
+.home-view h1 {
+    margin: 0 0 15px;
+    font-size: 56px;
+    font-weight: 800;
+    color: #222;
+}
+
+.home-view p {
+    margin: 0 0 30px;
+    color: #666;
+    font-size: 18px;
+}
+
+.home-view button {
+    padding: 13px 30px;
+    border: none;
+    border-radius: 10px;
+
+    background-color: #6c3ef4;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.home-view button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 62, 244, 0.3);
+}
     /*  css configuration view */
 .config-view {
     max-width: 600px;
@@ -79,16 +152,16 @@ button.selected {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+    padding: 10px 20px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background: #f8f8f8;
 }
 
-#game-head{
-    margin-top: 6px;
-}
+/* #game-head{
+    margin-top: -3px;
+} */
 #game-head > div {
     display: flex;
     flex-direction: column;
@@ -149,5 +222,70 @@ button.selected {
     font-size: 18px;
     background-color: #f5f5f5;
     border-radius: 10px;
+}
+
+/* css pour le game view */
+.game-view {
+    min-height: calc(100vh - 80px);
+    padding: 30px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #f6f7fb;
+}
+
+/* HUD */
+#game-head {
+    width: 500px;
+    margin-bottom: 2px;
+    margin-top: -25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 20px;
+
+    background-color: white;
+    border-radius: 12px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Chaque information du HUD */
+#game-head div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+}
+
+#game-head span {
+    font-size: 12px;
+    color: #777;
+}
+
+#game-head strong {
+    font-size: 18px;
+    color: #222;
+}
+
+/* Arena */
+#game-arena {
+    width: 500px;
+    height: 500px;
+
+    position: relative;
+
+    background-color: white;
+
+    border: 2px solid #ddd;
+    border-radius: 12px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+    overflow: hidden;
 }
 

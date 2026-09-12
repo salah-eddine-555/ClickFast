@@ -275,7 +275,9 @@ const startTimer = (gameState) => {
            if(gameState.score > gameState.record){
             gameState.record = gameState.score;
            }
+           gameState.precision = calculerPrecision(gameState);
             saveResults(gameState);
+
             const record = calculerRecord(gameState.difficulty, Number(gameState.duration));
 
             if(gameState.score < record){
@@ -328,6 +330,7 @@ const createGameState = (setting) => {
         mode: setting.mode,
         difficulty: setting.difficulty,
         duration: Number(setting.duration),
+        precision: 0,
         score: 0,
         hits: 0,
         record: calculerRecord(setting.difficulty, Number(setting.duration)) || 0,
@@ -413,6 +416,15 @@ const createHeadrGame = (gameState) => {
 
 }
 
+function calculerPrecision (gameState){
+
+    const totalClick = gameState.score + gameState.hits;
+
+    
+
+    return Math.round(gameState.score/(totalClick) * 100);
+}
+
 
 const getLastHistorique = () => {
     const data = localStorage.getItem("results");
@@ -447,6 +459,7 @@ const renderViewHistorique = () => {
                 <p>Duration : ${result.duration}</p>
                 <p>Score : ${result.score}</p>
                 <p>hits : ${result.hits}</p>
+                <p>precision : ${result.precision} %</p>
 
             </div>
         `
