@@ -87,7 +87,9 @@ const renderView = (route) => {
 
     if (route === '/game') {
         createGame();
-        
+    }
+    if(route === '/historique'){
+        renderViewHistorique();
     }
 
 };
@@ -161,13 +163,14 @@ app.addEventListener('submit', (e) => {
 })
 
 
-
+// la fonction principale du game qui appler tous les fonctionnalite depond au jeu 
 const createGame = () => {
     // console.log('1');
     const setting = getSetting()
     const gameState = createGameState(setting);
 
     createHeadrGame(gameState);
+
     startTimer(gameState);
     const arena = createArena();
 
@@ -183,6 +186,7 @@ const createGame = () => {
     })
     calculeScore(target, gameState)
     calculeDefi(arena, target, gameState);
+    // calculerRecord(gameState);
    
     return gameState;
 }
@@ -204,33 +208,60 @@ function moveTarget(target, arena){
 function calculeScore (target, gameState){
 
         target.addEventListener('click', (e) => {
-            console.log(e.target);
+            // console.log(e.target);
             if(gameState.isPlaying !== true){
                 return;
             }
             gameState.score = gameState.score+ 1;
-            updateScore(gameState);
-            console.log(gameState);
+            updateScore(gameState); 
         })
-
-
-
 }
 
 function calculeDefi(arena, target, gameState){
-    console.log(gameState);
+
+    console.log(gameState.mode);
+
+      if (gameState.mode !== "precision") {
+        return;
+    }
     arena.addEventListener('click', (e) => {
 
         if(!gameState.isPlaying){
             return;
         }
-
         if(e.target !== target){
             gameState.hits++;
-
             updateDefis(gameState);
         }
     })
+}
+
+const saveResults = (gameState) => {
+
+    const results = JSON.parse(localStorage.getItem("results")) || [];
+
+    results.push(gameState);
+
+    localStorage.setItem("results", JSON.stringify(results));
+};
+
+function calculerRecord(difficulty, duration) {
+
+    // console.log(difficulty, duration);return ;
+
+    const results = JSON.parse(localStorage.getItem("results")) || [];
+    let record = 0;
+    results.forEach(result => {
+    
+        if (result.difficulty === difficulty && Number(result.duration) === Number(duration)) {
+            if (result.score > record) {
+                record = result.score;
+            }
+        }
+
+    });
+
+    return record;
 }
 
 
@@ -241,7 +272,18 @@ const startTimer = (gameState) => {
         if(gameState.time <= 0){
             clearInterval(timer);
             gameState.isPlaying = false; 
-            // console.log(gameState);
+           if(gameState.score > gameState.record){
+            gameState.record = gameState.score;
+           }
+            saveResults(gameState);
+            const record = calculerRecord(gameState.difficulty, Number(gameState.duration));
+
+            if(gameState.score < record){
+                gameState.record = record;
+            }else{
+                  gameState.record = record;
+            }
+            updateRecord(gameState);
             return ;
         }
         
@@ -252,6 +294,13 @@ const startTimer = (gameState) => {
     return gameState.time;  
 }
 
+const updateRecord = (gameState) => {
+
+    const ele = document.getElementById("game-record");
+
+    ele.textContent = gameState.record;
+}
+
 const updateTime = (time) => {
 
     const timer = document.getElementById("time-game");
@@ -260,21 +309,28 @@ const updateTime = (time) => {
 }
 
 const updateScore = (gameState) => {
+    
     const score = document.getElementById("score-game");
     score.textContent = gameState.score;
 }
+
 const updateDefis = (gameState) => {
     const hits = document.getElementById("hits-game");
     hits.textContent = gameState.hits;
 }   
 
+ 
+
 const createGameState = (setting) => {
-    // console.log(setting);
+    
     return {
         pseudo: setting.pseudo,
+        mode: setting.mode,
+        difficulty: setting.difficulty,
+        duration: Number(setting.duration),
         score: 0,
         hits: 0,
-        record: 0,
+        record: calculerRecord(setting.difficulty, Number(setting.duration)) || 0,
         time: Number(setting.duration),
         isPlaying: true
     }
@@ -321,6 +377,7 @@ const createArena = () => {
 
 const createHeadrGame = (gameState) => {
     const head = document.getElementById("game-head");
+    
 
      head.innerHTML = `
              <div>
@@ -333,14 +390,19 @@ const createHeadrGame = (gameState) => {
                 <strong id="score-game">${gameState.score}</strong>
             </div>
             
-            <div>
-                <span>hits</span>
-                <strong id="hits-game" >${gameState.hits}</strong>
-            </div>
-
+           
+            ${
+                gameState.mode === "precision" ?
+                     `<div>
+                        <span>hits</span>
+                        <strong id="hits-game" >${gameState.hits}</strong>
+                    </div>`
+                : ""
+            }
+                
             <div>
                 <span>Record</span>
-                <strong>${gameState.record}</strong>
+                <strong id="game-record">${gameState.record}</strong>
             </div>
 
             <div>
@@ -352,7 +414,47 @@ const createHeadrGame = (gameState) => {
 }
 
 
+const getLastHistorique = () => {
+    const data = localStorage.getItem("results");
+
+    if(!data) {
+        return []
+    }
+    const results = JSON.parse(data);
+
+    return results.slice(-5);
+}
+
+
+const renderViewHistorique = () => {
+
+    const results = getLastHistorique();
+    console.log(results);
+    console.log(results.length);
+    const ele = document.getElementById("historique-list");
+
+    if (results.length === 0) {
+        ele.innerHTML = `<p>Aucune historique pour le moment !</p>`;
+        return;
+    }
+
+    ele.innerHTML = results.map(result => {
+        return `
+            <div class="historique-item">
+                <p>Pseudo : ${result.pseudo}</p>
+                <p>Mode : ${result.mode}</p>
+                <p>Difficulty : ${result.difficulty}</p>
+                <p>Duration : ${result.duration}</p>
+                <p>Score : ${result.score}</p>
+                <p>hits : ${result.hits}</p>
+
+            </div>
+        `
+    }).join("");
+}
+
+
 renderView('/')
 renderView(getCurrentRoute());
 
-// createGame()
+

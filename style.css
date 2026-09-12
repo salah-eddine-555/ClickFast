@@ -106,3 +106,48 @@ button.selected {
     color: #222;
 }
 
+
+
+/* css pour le view  Historique  */
+.historique-view {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.historique-view h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#historique-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.historique-item {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.historique-item p {
+    margin: 8px 0;
+}
+
+.historique-item p strong {
+    font-weight: bold;
+}
+#historique-list > p {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    color: #666;
+    font-size: 18px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
